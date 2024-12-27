@@ -1,2 +1,4 @@
 # Hide .env files:
 .env
+
+venv/
