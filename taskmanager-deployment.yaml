@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flink-taskmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flink
+      component: taskmanager
+  template:
+    metadata:
+      labels:
+        app: flink
+        component: taskmanager
+    spec:
+      containers:
+        - name: taskmanager
+          image: flink:1.17
+          args: ["taskmanager"]
+          env:
+            - name: JOB_MANAGER_RPC_ADDRESS
+              value: flink-jobmanager
+            - name: TASKMANAGER_NUMBER_OF_TASK_SLOTS
+              value: "2"
+            - name: TASK_MANAGER_MEMORY_PROCESS_SIZE
+              value: "1600m"
+          ports:
+            - containerPort: 6122
+              name: rpc
+            - containerPort: 6125
+              name: query-state
+          volumeMounts:
+            - name: flink-config-volume
+              mountPath: /opt/flink/conf
+            - name: flink-tmp
+              mountPath: /tmp
+      volumes:
+        - name: flink-config-volume
+          configMap:
+            name: flink-config
+        - name: flink-tmp
+          emptyDir: {} 

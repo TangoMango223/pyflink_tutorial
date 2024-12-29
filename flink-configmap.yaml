@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flink
 data:
-  flink-conf.yaml: |+
+  flink-conf.yaml: |
     jobmanager.rpc.address: flink-jobmanager
     taskmanager.numberOfTaskSlots: 2
     blob.server.port: 6124
@@ -13,5 +13,5 @@ data:
     taskmanager.rpc.port: 6122
     queryable-state.proxy.ports: 6125
     jobmanager.memory.process.size: 1600m
-    taskmanager.memory.process.size: 1728m
-    parallelism.default: 2
+    taskmanager.memory.process.size: 1600m
+    parallelism.default: 2 
